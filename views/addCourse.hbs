@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Course</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Add Course</h2>
+        <form action="/courses/add" method="POST">
+            <div class="mb-3">
+                <label for="courseCode" class="form-label">Course Code</label>
+                <input type="text" class="form-control" id="courseCode" name="courseCode" required>
+            </div>
+            <div class="mb-3">
+                <label for="courseDescription" class="form-label">Course Description</label>
+                <input type="text" class="form-control" id="courseDescription" name="courseDescription" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Course</button>
+        </form>
+    </div>
+</body>
+</html>

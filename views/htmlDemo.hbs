@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML Demo - WEB700</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/theme.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <main class="col-md-12">
+                <!-- Start your code here -->
+                <!-- Table Section -->
+                <section id="tables">
+                    <h2>Tables</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <caption>Table 1: Classmate Information</caption>
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Personal Information</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="2">Name: Abel Crane</td>
+                                        <td>Email: acrane@seneca.com</td>
+                                        <td>Phone: 123-456-7890</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address: 123 Main St</td>
+                                        <td>City: Markham</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Bio:Abel Crane is a passionate individual with a keen interest in technology and innovation.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <caption>Table 2: Course Information</caption>
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Course Schedule</th>
+                                        <th>Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Monday</td>
+                                        <td>9:00 AM - 12:00 PM</td>
+                                        <td rowspan="2">Room 101</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wednesday</td>
+                                        <td>1:00 PM - 4:00 PM</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Instructor: Prof. Smith</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <p>This section contains two tables demonstrating the use of various HTML table elements and properties, including captions, headers, and footers. Each table presents different types of information, such as personal information and course schedules, using rows and columns.</p>
+                </section>
+
+                <!-- List Section -->
+                <section id="lists">
+                    <h2>Lists</h2>
+                    <ul>
+                        <li>Task 1: Read the assigned chapters</li>
+                        <li>Task 2: Complete the online quiz</li>
+                        <li>
+                            Task 3: Prepare for the group project:
+                            <ul>
+                                <li>Research relevant literature</li>
+                                <li>Outline project objectives</li>
+                                <li>Assign tasks to team members</li>
+                            </ul>
+                        </li>
+                        <li>Task 4: Attend the weekly meeting</li>
+                        <li>Task 5: Submit the progress report</li>
+                    </ul>
+                    <p>This section presents a list of tasks for an academic project. The list includes various tasks such as reading assigned chapters, completing quizzes, preparing for a group project, attending meetings, and submitting progress reports. Task 3 contains a nested unordered list with sub-tasks related to project preparation.</p>
+                </section>
+
+                <!-- Image section -->
+                <section id="images">
+                    <h2>Images</h2>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Snowboarder_in_halfpipe.jpg" alt="Snowboarder in halfpipe" style="max-width: 200px;">
+                    <img src="love.jpg" alt="love image" style="max-width: 200px;">
+                    <img src="cross.png" alt="kid image" style="max-width: 200px;">
+                    <p>This section contains three images with alternative text. The images depict a snowboarder in a halfpipe, a snowflake, and a ski flyer in action.</p>
+                    <p>The second image depict a symbol of love, reminding us to live and walk in love with one and other</p>
+                    <p>This image depict a child of God praying to Jesus.</p>
+                </section>
+
+                <!-- Audio -->
+                <section id="audio">
+                    <h2>Audio</h2>
+                    <audio controls>
+                        <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-audio.mp3" type="audio/mpeg">
+                        <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-audio.ogg" type="audio/ogg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p>This section contains an audio player with sample audio files. You can use the player controls to play the audio.</p>
+                </section>
+
+                <!-- Video -->
+                <section id="video">
+                    <h2>Video</h2>
+                    <video controls>
+                        <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-video.mp4" type="video/mp4">
+                        <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-video.ogg" type="video/ogg">
+                        <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-video.webm" type="video/webm">
+                        Your browser does not support the video element.
+                    </video>
+                    <p>This section contains a video of a rotating earth.</p>
+                </section>
+                <!-- End your code here -->
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6
