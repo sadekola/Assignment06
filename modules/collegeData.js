@@ -1,15 +1,16 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
 // Replace 'nstdtfya', 'tiXz0MpqMNI0OkUa5nN0qrb5YXfns-xP', 'drona.db.elephantsql.com' with your actual database connection details
-const sequelize = new Sequelize('nstdtfya', 'nstdtfya', 'tiXz0MpqMNI0OkUa5nN0qrb5YXfns-xP', {
-    host: 'drona.db.elephantsql.com',
+const sequelize = new Sequelize('Assignment06', 'web700_DB_owner', 'nbt1VprOHvS5', {
+    host: 'ep-curly-bonus-a59510yk.us-east-2.aws.neon.tech',
     dialect: 'postgres',
     port: 5432,
     dialectOptions: {
-        ssl: { rejectUnauthorized: false }
+        ssl: { rejectUnauthorized: true } // You may need to set this to true depending on your server's SSL configuration
     },
     query: { raw: true }
 });
+
 
 // Define the Student model
 const Student = sequelize.define('Student', {
