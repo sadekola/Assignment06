@@ -1,10 +1,10 @@
 /*********************************************************************************
-*  WEB700 – Assignment 05
+*  WEB700 – Assignment 06
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Samuel Adekola Student ID: 130895220 Date: 2024 - 03 - 24
+*  Name: Samuel Adekola Student ID: 130895220 Date: 2024 - 04 - 04
 *
 ********************************************************************************/ 
 
@@ -101,23 +101,7 @@ collegeData.initialize().then(() => {
     });
     
 
-    // app.get('/student/:num', (req, res) => {
-    //     Promise.all([
-    //         collegeData.getStudentByNum(req.params.num),
-    //         collegeData.getCourses()
-    //     ])
-    //     .then(([studentData, coursesData]) => {
-    //         res.render('student', {
-    //             student: studentData,
-    //             courses: coursesData // Ensure this is an array of course objects
-    //         });
-    //     })
-    //     .catch(err => {
-    //         // Handle errors, such as sending a 500 status code
-    //         console.error(err);
-    //         res.status(500).send('Error loading student edit form');
-    //     });
-    // });
+
     app.get('/student/:studentNum', (req, res) => {
         let viewData = {};
     
@@ -133,9 +117,7 @@ collegeData.initialize().then(() => {
         .then((data) => {
             viewData.courses = data; // store course data in the "viewData" object as "courses"
             
-            // loop through viewData.courses and once we have found the courseId that matches 
-            // the student's "course" value, add a "selected" property to the matching 
-            // viewData.courses object
+
             for (let i = 0; i < viewData.courses.length; i++) {
                 if (viewData.courses[i].courseId === viewData.student.course) {
                     viewData.courses[i].selected = true;
@@ -153,23 +135,10 @@ collegeData.initialize().then(() => {
     });
     
     
-    // Course by ID route
-    // app.get("/course/:id", (req, res) => {
-    //     const courseId = req.params.id;
-    //     collegeData.getCourseById(courseId)
-    //         .then((course) => {
-    //             if (course) {
-    //                 res.render("course", { course: course });
-    //             } else {
-    //                 res.status(404).render("error", { message: "Course not found" });
-    //             }
-    //         })
-    //         .catch((err) => res.status(500).render("error", { message: "Internal server error" }));
-    // });
 
 
     app.post('/student/update', (req, res) => {
-        //console.log(req.body); // Add this line to debug incoming form data
+
         collegeData.updateStudent(req.body)
             .then(() => {
                 res.redirect('/students');
@@ -193,18 +162,7 @@ collegeData.initialize().then(() => {
         res.render('htmlDemo', { navLink: app.locals.activeRoute });
     });
 
-    // Add student form route
-    // app.get("/students/add", (req, res) => {
-    //     collegeData.getCourses()
-    //     .then((courses) => {
-    //         res.render("addStudent", { courses: courses });
-    //     })
-    //     .catch(() => {
-    //         // If there's an error such as not being able to retrieve courses, 
-    //         // you can still render the view but without the courses list.
-    //         res.render("addStudent", { courses: [] });
-    //     });
-    // });
+
     app.get("/students/add", (req, res) => {
         collegeData.getCourses()
         .then(courses => {
