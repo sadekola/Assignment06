@@ -1,22 +1,22 @@
 /*********************************************************************************
-*  WEB700 – Assignment 06
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
-*  of this assignment has been copied manually or electronically from any other source 
+*  WEB700 – Assignment 05
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part
+*  of this assignment has been copied manually or electronically from any other source
 *  (including 3rd party web sites) or distributed to other students.
-* 
-*  Name: Samuel Adekola Student ID: 130895220 Date: 2024 - 04 - 04
 *
-********************************************************************************/ 
-
+*  Name: Samuel Adekola Student ID: 130895220 Date: 2024 - 03 - 24
+*
+********************************************************************************/
+ 
 const express = require("express");
 const exphbs = require('express-handlebars');
 const path = require("path");
 const bodyParser = require("body-parser");
 const collegeData = require("./modules/collegeData.js");
-
+ 
 const HTTP_PORT = process.env.PORT || 8080;
 const app = express();
-
+ 
 const hbs = exphbs.create({
     extname: '.hbs',
     defaultLayout: 'main',
@@ -41,36 +41,36 @@ const hbs = exphbs.create({
         }
     }
 });
-
-
-
-
+ 
+ 
+ 
+ 
 // Set up handlebars engine
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
-
+ 
 // Middleware for parsing request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
-
+ 
 // Middleware for setting active route
 app.use(function(req, res, next) {
     let route = req.path.substring(1);
     app.locals.activeRoute = "/" + (isNaN(route.split("/")[1]) ? route.replace(/\/(?!.*)/, "") : route.replace(/\/(.*)/, ""));
     next();
 });
-
+ 
 // Initialize college data
 collegeData.initialize().then(() => {
     console.log("Data initialized. Setting up the routes.");
-
+ 
     // Static files middleware
     app.use(express.static(path.join(__dirname, 'public')));
-
+ 
     // Home route
     app.get("/", (req, res) => {
         res.render('home', { navLink: app.locals.activeRoute });
     });
-
+ 
     // Students route
     app.get('/students', (req, res) => {
         collegeData.getAllStudents()
@@ -99,12 +99,28 @@ collegeData.initialize().then(() => {
             res.render('courses', { message: "unable to fetch courses" });
         });
     });
-    
-
-
+   
+ 
+    // app.get('/student/:num', (req, res) => {
+    //     Promise.all([
+    //         collegeData.getStudentByNum(req.params.num),
+    //         collegeData.getCourses()
+    //     ])
+    //     .then(([studentData, coursesData]) => {
+    //         res.render('student', {
+    //             student: studentData,
+    //             courses: coursesData // Ensure this is an array of course objects
+    //         });
+    //     })
+    //     .catch(err => {
+    //         // Handle errors, such as sending a 500 status code
+    //         console.error(err);
+    //         res.status(500).send('Error loading student edit form');
+    //     });
+    // });
     app.get('/student/:studentNum', (req, res) => {
         let viewData = {};
-    
+   
         collegeData.getStudentByNum(req.params.studentNum).then((data) => {
             if (data) {
                 viewData.student = data; // store student data in the "viewData" object as "student"
@@ -116,8 +132,10 @@ collegeData.initialize().then(() => {
         }).then(collegeData.getCourses)
         .then((data) => {
             viewData.courses = data; // store course data in the "viewData" object as "courses"
-            
-
+           
+            // loop through viewData.courses and once we have found the courseId that matches
+            // the student's "course" value, add a "selected" property to the matching
+            // viewData.courses object
             for (let i = 0; i < viewData.courses.length; i++) {
                 if (viewData.courses[i].courseId === viewData.student.course) {
                     viewData.courses[i].selected = true;
@@ -133,12 +151,25 @@ collegeData.initialize().then(() => {
             }
         });
     });
-    
-    
-
-
+   
+   
+    // Course by ID route
+    // app.get("/course/:id", (req, res) => {
+    //     const courseId = req.params.id;
+    //     collegeData.getCourseById(courseId)
+    //         .then((course) => {
+    //             if (course) {
+    //                 res.render("course", { course: course });
+    //             } else {
+    //                 res.status(404).render("error", { message: "Course not found" });
+    //             }
+    //         })
+    //         .catch((err) => res.status(500).render("error", { message: "Internal server error" }));
+    // });
+ 
+ 
     app.post('/student/update', (req, res) => {
-
+        //console.log(req.body); // Add this line to debug incoming form data
         collegeData.updateStudent(req.body)
             .then(() => {
                 res.redirect('/students');
@@ -148,21 +179,32 @@ collegeData.initialize().then(() => {
                 res.status(500).send("Unable to update student.");
             });
     });
-    
-    
-
-
+   
+   
+ 
+ 
     // About route
     app.get("/about", (req, res) => {
         res.render('about', { navLink: app.locals.activeRoute });
     });
-
+ 
     // HTML demo route
     app.get("/htmlDemo", (req, res) => {
         res.render('htmlDemo', { navLink: app.locals.activeRoute });
     });
-
-
+ 
+    // Add student form route
+    // app.get("/students/add", (req, res) => {
+    //     collegeData.getCourses()
+    //     .then((courses) => {
+    //         res.render("addStudent", { courses: courses });
+    //     })
+    //     .catch(() => {
+    //         // If there's an error such as not being able to retrieve courses,
+    //         // you can still render the view but without the courses list.
+    //         res.render("addStudent", { courses: [] });
+    //     });
+    // });
     app.get("/students/add", (req, res) => {
         collegeData.getCourses()
         .then(courses => {
@@ -173,7 +215,7 @@ collegeData.initialize().then(() => {
             res.render("addStudent", { courses: [] });
         });
     });
-    
+   
     // Add student form submission route
     app.post("/students/add", (req, res) => {
         collegeData.addStudent(req.body)
@@ -183,7 +225,7 @@ collegeData.initialize().then(() => {
                 res.status(500).send("Failed to add student");
             });
     });
-
+ 
     // Update student form route
     app.get("/students/update/:studentNum", (req, res) => {
         const studentNum = req.params.studentNum;
@@ -191,18 +233,18 @@ collegeData.initialize().then(() => {
             .then((student) => res.render("updateStudent", { student: student }))
             .catch(() => res.status(404).render("error", { message: "Student not found" }));
     });
-
+ 
     // Update student form submission route
     app.post("/students/update/:studentNum", (req, res) => {
         const studentNum = req.params.studentNum;
         const updatedStudent = req.body;
-
+ 
         // Check if the updatedStudent object contains valid data
         if (!updatedStudent.studentNum) {
             res.status(400).send("Invalid student data");
             return;
         }
-
+ 
         collegeData.updateStudent(updatedStudent)
             .then(() => res.redirect("/students"))
             .catch((err) => {
@@ -210,12 +252,12 @@ collegeData.initialize().then(() => {
                 res.status(500).send("Failed to update student");
             });
     });
-
+ 
     // Route to display the form for adding a new course
 app.get('/courses/add', (req, res) => {
     res.render('addCourse'); // Make sure you have an 'addCourse' view in your views directory
 });
-
+////////////////////////////
 // Route to handle the POST from the 'addCourse' form
 app.post('/courses/add', (req, res) => {
     collegeData.addCourse(req.body)
@@ -226,7 +268,30 @@ app.post('/courses/add', (req, res) => {
         res.status(500).send("Unable to add course: " + err);
     });
 });
-
+////////////////////////////////////////
+// This route receives the POST request from the form submission for updating a course.
+app.post('/course/update', (req, res) => {
+    // Assuming you have a function named updateCourse in your collegeData module
+    // that updates the course based on the data received from the form.
+    // req.body will contain the form data, which includes the courseCode,
+    // courseDescription, and courseId fields.
+    collegeData.updateCourse({
+        courseId: req.body.courseId,
+        courseCode: req.body.courseCode,
+        courseDescription: req.body.courseDescription
+    })
+    .then(() => {
+        // If the update is successful, redirect the user back to the list of courses.
+        res.redirect('/courses');
+    })
+    .catch(err => {
+        // If there's an error during the update, send a plain text error message.
+        console.error(err);  // Log the error for debugging purposes.
+        res.status(500).send('Error updating course: ' + err.message);
+    });
+});
+ 
+ 
 // Route to display the form for updating a course
 app.get('/courses/update/:id', (req, res) => {
     collegeData.getCourseById(req.params.id)
@@ -241,7 +306,7 @@ app.get('/courses/update/:id', (req, res) => {
         res.status(500).send("Unable to fetch course: " + err);
     });
 });
-
+ 
 // Route to handle the POST from the 'updateCourse' form
 app.post('/courses/update', (req, res) => {
     collegeData.updateCourse(req.body)
@@ -252,7 +317,7 @@ app.post('/courses/update', (req, res) => {
         res.status(500).send("Unable to update course: " + err);
     });
 });
-
+ 
 app.get("/course/:id", (req, res) => {
     collegeData.getCourseById(req.params.id)
     .then((course) => {
@@ -266,7 +331,7 @@ app.get("/course/:id", (req, res) => {
         res.status(500).send("Error fetching course: " + err);
     });
 });
-
+ 
 app.get("/course/delete/:id", (req, res) => {
     collegeData.deleteCourseById(req.params.id)
     .then(() => {
@@ -277,7 +342,7 @@ app.get("/course/delete/:id", (req, res) => {
         res.status(500).send("Unable to remove course / Course not found");
     });
 });
-
+ 
 app.get('/student/delete/:studentNum', (req, res) => {
     collegeData.deleteStudentByNum(req.params.studentNum)
     .then(() => {
@@ -287,20 +352,21 @@ app.get('/student/delete/:studentNum', (req, res) => {
         res.status(500).send("Unable to remove student / Student not found");
     });
 });
-
-
-
-
+ 
+ 
+ 
+ 
     // 404 error handling
     app.use((req, res) => {
         res.status(404).render("error", { message: "Page not found" });
     });
-
+ 
     // Start the server
     app.listen(HTTP_PORT, () => {
         console.log("Server listening on port: " + HTTP_PORT);
     });
-
+ 
 }).catch(err => {
     console.error("Failed to initialize data:", err);
 });
+ 

@@ -1,14 +1,16 @@
+<link rel="stylesheet" href="/css/theme.css">
+ 
 <div class="row">
     <div class="col-md-12">
         <br>
-        <h2>{{course.courseDescription}}</h2> <!-- Display courseDescription in the heading -->
+        <h2>Edit Course</h2> <!-- Changed to Edit Course to reflect the action -->
         <hr />
         <form action="/course/update" method="POST"> <!-- Updated form method and action -->
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="courseCode">Course Code</label>
-                        <input class="form-control" id="courseCode" name="courseCode" type="text" value="{{course.courseCode}}" readonly />
+                        <input class="form-control" id="courseCode" name="courseCode" type="text" value="{{course.courseCode}}"  />
                     </div>
                 </div>
                 <div class="col-md-9">
