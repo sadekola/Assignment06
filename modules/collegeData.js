@@ -220,27 +220,7 @@ module.exports.addCourse = function (courseData) {
     });
 };
  
-// module.exports.updateCourse = function (courseData) {
-//     // Replace empty string values with null
-//     for (const key in courseData) {
-//         if (courseData.hasOwnProperty(key)) {
-//             courseData[key] = courseData[key] === "" ? null : courseData[key];
-//         }
-//     }
- 
-//     return Course.update(courseData, {
-//         where: { courseId: courseData.courseId }
-//     })
-//     .then(() => {
-//         return Promise.resolve("Course updated successfully");
-//     })
-//     .catch(err => {
-//         console.error("Error updating course: ", err);
-//         return Promise.reject("Unable to update course");
-//     });
-// };
- 
-// collegeData.js
+
  
 module.exports.updateCourse = function(courseData) {
     return new Promise((resolve, reject) => {
